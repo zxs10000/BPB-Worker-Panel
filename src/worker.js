@@ -10,10 +10,11 @@ import { getClashNormalConfig, getClashWarpConfig } from './cores-configs/clash'
 import { getNormalConfigs } from './cores-configs/normalConfigs';
 import { initializeParams, userID, client, pathName } from './helpers/init';
 import { fallback, getMyIP, handlePanel } from './helpers/helpers';
+import { renderSecretsPage } from './pages/secrets';
 
 export default {
     async fetch(request, env) {
-        try {          
+        try {    
             const upgradeHeader = request.headers.get('Upgrade');
             await initializeParams(request, env);
             if (!upgradeHeader || upgradeHeader !== 'websocket') {            
@@ -52,6 +53,9 @@ export default {
                     case '/my-ip':
                         return await getMyIP(request);
 
+                    case '/secrets':
+                        return await renderSecretsPage(request, env);
+
                     default:
                         return await fallback(request);
                 }
@@ -61,7 +65,7 @@ export default {
                     : await vlessOverWSHandler(request, env);
             }
         } catch (err) {
-            return await renderErrorPage(request, env, 'Something went wrong!', err, false);
+            return await renderErrorPage(err);
         }
     }
 };

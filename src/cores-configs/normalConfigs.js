@@ -1,12 +1,10 @@
 import { getConfigAddresses, generateRemark, randomUpperCase, getRandomPath } from './helpers';
 import { initializeParams, userID, trojanPassword, hostName, client, defaultHttpsPorts } from "../helpers/init";
 import { getDataset } from '../kv/handlers';
-import { renderErrorPage } from '../pages/error';
 
 export async function getNormalConfigs(request, env) {
     await initializeParams(request, env);
-    const { kvNotFound, proxySettings } = await getDataset(request, env);
-    if (kvNotFound) return await renderErrorPage(request, env, 'KV Dataset is not properly set!', null, true);
+    const { proxySettings } = await getDataset(request, env);
     const { 
         cleanIPs, 
         proxyIP, 
@@ -45,11 +43,11 @@ export async function getNormalConfigs(request, env) {
                 : '&security=none';
 
             if (vlessConfigs) {
-                vlessConfs += `${atob('dmxlc3M')}://${userID}@${addr}:${port}?path=/${path}&encryption=none&host=${host}&type=ws${tlsFields}#${vlessRemark}\n`; 
+                vlessConfs += `${atob('dmxlc3M6Ly8=')}${userID}@${addr}:${port}?path=/${path}&encryption=none&host=${host}&type=ws${tlsFields}#${vlessRemark}\n`; 
             }
 
             if (trojanConfigs) {
-                trojanConfs += `${atob('dHJvamFu')}://${trojanPass}@${addr}:${port}?path=/tr${path}&host=${host}&type=ws${tlsFields}#${trojanRemark}\n`;
+                trojanConfs += `${atob('dHJvamFuOi8v')}${trojanPass}@${addr}:${port}?path=/tr${path}&host=${host}&type=ws${tlsFields}#${trojanRemark}\n`;
             }
             
             proxyIndex++;
